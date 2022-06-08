@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class TestDrive {
 
-    static ArrayList<ClientHandler> clients = new ArrayList<>();
+
+
 
     public static void main(String[] args) {
         new TestDrive().run();
@@ -20,7 +21,7 @@ public class TestDrive {
             while (true) {
                 Socket socket = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(socket);
-                clients.add(clientHandler);
+
                 new Thread(clientHandler).start();
             }
         } catch (IOException e) {

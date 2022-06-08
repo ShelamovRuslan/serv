@@ -14,7 +14,7 @@ public class ClientHandler implements Runnable{
 @Override
     public void run () {
         String line;
-        do {
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                  PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
                 writer.println("Hello, what is your name?");
@@ -31,6 +31,6 @@ public class ClientHandler implements Runnable{
                     throw new RuntimeException(e);
                 }
             }
-        } while (!line.isBlank());
+
     }
 }

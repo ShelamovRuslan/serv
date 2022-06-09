@@ -6,12 +6,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TestDrive {
 
 
-    private ArrayList<ClientHandler> clients = new ArrayList<>();
 
+    CopyOnWriteArrayList<ClientHandler> clients = new CopyOnWriteArrayList<>();
     public static void main(String[] args) {
         new TestDrive().run();
     }
@@ -25,19 +26,21 @@ public class TestDrive {
                 new Thread(clientHandler).start();
             }
         } catch (IOException e) {
+            System.out.println("Ошибка тут 21");
             throw new RuntimeException(e);
         }
 
     }
 
     public synchronized void sendMassage (String massage, String name){
-        ArrayList<ClientHandler> clientsTempList = this.clients;
-        for (ClientHandler clientHandler: clientsTempList){
+
+        for (ClientHandler clientHandler: clients){
             Socket socket = clientHandler.getSocket();
             try {
                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
                 writer.printf("%s пишет: %s\n", name, massage);
             } catch (IOException e) {
+                System.out.println("Ошибка тут 20");
                 throw new RuntimeException(e);
             }
         }

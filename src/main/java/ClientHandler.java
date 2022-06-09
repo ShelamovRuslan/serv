@@ -34,20 +34,30 @@ public class ClientHandler implements Runnable{
     public void run () {
         String line;
 
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
                 writer.println("Hello, what is your name?");
                 setName(reader.readLine());
+
                 do {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     line = reader.readLine();
-                   this.testDrive.sendMassage(line, getName());
+                    this.testDrive.sendMassage(line, getName());
+
                 } while (true);
             } catch (IOException e) {
+                System.out.println("Ошибка тут 12");
                 throw new RuntimeException(e);
             } finally {
                 try {
                     socket.close();
                 } catch (IOException e) {
+                    System.out.println("Ошибка тут 11");
                     throw new RuntimeException(e);
                 }
             }
